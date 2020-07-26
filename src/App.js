@@ -20,12 +20,12 @@ class App extends Component {
   };
 
   //changing state on button click
-  switchNameHandler = () =>{
+  switchNameHandler = (newName) =>{
     // console.log("Was clicked");
     //DONT DO THIS this.state.persons[0].name = "abcd"
     this.setState({
       persons: [
-      { name: 'Abcd', age: 24 },
+      { name: newName, age: 24 },//newName gets from bind function
       { name: 'efgh', age: 25 },
       { name: 'ijkl', age: 29 }
 
@@ -40,10 +40,22 @@ class App extends Component {
       <div className="App">
         <h1>Welcome Ghanashyam</h1>
         <p>This is working!!!!!!!!!</p>
-        <button onClick={this.switchNameHandler}>Switch Name</button>
-        <Person name={this.state.persons[0].name} age={this.state.persons[0].age}/>
-        <Person name={this.state.persons[1].name} age={this.state.persons[1].age}/>
-        <Person name={this.state.persons[2].name} age={this.state.persons[2].age}/>
+        <button onClick={this.switchNameHandler.bind(this,"Manu")}>Switch Name</button>
+        <Person 
+        name={this.state.persons[0].name} 
+        age={this.state.persons[0].age}/>
+
+        <Person 
+        name={this.state.persons[1].name} 
+        age={this.state.persons[1].age}
+        click={() => this.switchNameHandler('Kamath')}
+        //we can pass methods as props to another file
+        />
+
+        <Person 
+        name={this.state.persons[2].name}
+         age={this.state.persons[2].age}/>
+         
         <Person name="Shiva" age="28"> My Hobbies is riding</Person>
       </div>
     );
