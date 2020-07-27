@@ -21,17 +21,24 @@ class App extends Component {
   };
 
   //changing state on button click
-  switchNameHandler = (newName) =>{
-    // console.log("Was clicked");
-    //DONT DO THIS this.state.persons[0].name = "abcd"
-    this.setState({
-      persons: [
-      { name: newName, age: 24 },//newName gets from bind function
-      { name: 'efgh', age: 25 },
-      { name: 'ijkl', age: 29 }
+  // switchNameHandler = (newName) =>{
+  //   console.log("Was clicked");
+  //   DONT DO THIS this.state.persons[0].name = "abcd"
+  //   this.setState({
+  //     persons: [
+  //     { name: newName, age: 24 },newName gets from bind function
+  //     { name: 'efgh', age: 25 },
+  //     { name: 'ijkl', age: 29 }
 
-       ]
-      })
+  //      ]
+  //     })
+  // }
+  deletePersonhandler = (personIndex) =>{
+    //const persons = this.state.persons.slice();//bad practice.so create a copy using slice() 
+    //alternative is spread operator
+    const persons = [...this.state,persons];
+    persons.splice(personIndex,1);
+    this.setState({persons:persons});
   }
 
 
@@ -51,6 +58,7 @@ class App extends Component {
     const doesShow = this.state.showPersons;
     this.setState({showPersons:!doesShow})
   }
+
   
   
   render() { 
@@ -66,37 +74,52 @@ class App extends Component {
 
     };
 
+    let persons = null;
+
+    if (this.state.showPersons) {
+      persons = (
+
+        // representing as a list 
+        <div>
+          {this.state.persons.map( (person,index)=>{
+            return <Person click={ () => this.deletePersonhandler(index) } name={person.name} age={person.age}/>
+          } )}
+
+          {/* <Person
+            name={this.state.persons[0].name}
+            age={this.state.persons[0].age} />
+
+          <Person
+            name={this.state.persons[1].name}
+            age={this.state.persons[1].age}
+            click={() => this.switchNameHandler('Kamath')}
+          //we can pass methods as props to another file
+          />
+
+          <Person
+            name={this.state.persons[2].name}
+            age={this.state.persons[2].age}
+            changed={this.nameChangedhandler} />
+
+          <Person name="Shiva" age="28"> My Hobbies is riding</Person> */}
+
+        </div>
+
+      );
+    }
+
+
     return (
       <div className="App">
         <h1>Welcome Ghanashyam</h1>
         <p>This is working!!!!!!!!!</p>
         <button style={style} onClick={this.togglePersonHandler}>Switch Name</button>
 
-        {/* toggling */}
-        {
-          this.state.showPersons === true ?
-        <div>
+        {/* another way toggling */}
         
-        <Person 
-        name={this.state.persons[0].name} 
-        age={this.state.persons[0].age}/>
-
-        <Person 
-        name={this.state.persons[1].name} 
-        age={this.state.persons[1].age}
-        click={() => this.switchNameHandler('Kamath')}
-        //we can pass methods as props to another file
-        />
-
-        <Person 
-        name={this.state.persons[2].name}
-         age={this.state.persons[2].age}
-         changed={this.nameChangedhandler}/>
-         
-        <Person name="Shiva" age="28"> My Hobbies is riding</Person>
         
-        </div>:null
-        }
+        {persons}
+        
         
       </div>
     );
