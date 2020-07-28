@@ -1,11 +1,23 @@
 import React from 'react';
-import './Person.css'
+import Radium from 'radium';
+import './Person.css';
+
 
 
 
 const person = (props) =>{
+
+    //media queries
+    const style ={
+        '@media (min-width : 500px)': {
+            width :'450px'
+        }
+    };
+    
+
+
     return(
-        <div className="Person">
+        <div className="Person" style={style}>
         <p onClick={props.click}>I am {props.name} and my age is {props.age} years old.</p> 
          {/* dynamic content  */}
 
@@ -16,4 +28,4 @@ const person = (props) =>{
         </div>
     );
 };
-export default person; 
+export default Radium(person); 

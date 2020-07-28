@@ -1,5 +1,6 @@
 import React, { Component } from 'react';  
 // import React, { useState } from 'react';
+import Radium , { StyleRoot } from 'radium';
 import './App.css';
 import Person from './Person/Person';
 
@@ -43,7 +44,7 @@ class App extends Component {
 
 
   nameChangedhandler = (event,id) =>{
-    const personIndex =this.state.persons.findIndex( (p) =>{
+    const personIndex =this.state.persons.findIndex( (p) => {
       return p.id === id;
 
     })
@@ -71,10 +72,15 @@ class App extends Component {
     //inline styling
     const style ={
       backgroundColor:'green',
+      color:'white',
       font:'inherit',
       border:'1px solid blue',
       padding:'8px',
-      cursor:'pointer'
+      cursor:'pointer',
+      ':hover':{
+        backgroundColor:'lightgreen',
+        color:'black'
+      }
 
     };
 
@@ -114,13 +120,27 @@ class App extends Component {
         </div>
 
       );
+      style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor:'lightred',
+        color:'black'
+      }
+
+    }
+    let classes=[];
+    if(this.state.persons.length <= 2){
+      classes.push('red');//classes['red]
+    }
+    if(this.state.persons.length <= 1){
+      classes.push('bold');//classes['red','bold']
     }
 
 
     return (
+      <StyleRoot>
       <div className="App">
         <h1>Welcome Ghanashyam</h1>
-        <p>This is working!!!!!!!!!</p>
+        <p className = {classes.join(' ')}>This is working!!!!!!!!!</p>
         <button style={style} onClick={this.togglePersonHandler}>Switch Name</button>
 
         {/* another way toggling */}
@@ -130,8 +150,9 @@ class App extends Component {
         
         
       </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
