@@ -1,7 +1,7 @@
 import React, { Component } from 'react';  
 // import React, { useState } from 'react';
 // import Radium from 'radium';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
 
 // useState-react hook for states
@@ -70,21 +70,22 @@ class App extends Component {
     // in funcion component no render
 
     //inline styling
-    const style ={
-      backgroundColor:'green',
-      color:'white',
-      font:'inherit',
-      border:'1px solid blue',
-      padding:'8px',
-      cursor:'pointer',
-      // ':hover':{
-      //   backgroundColor:'lightgreen',
-      //   color:'black'
-      // }
+    // const style ={
+    //   backgroundColor:'green',
+    //   color:'white',
+    //   font:'inherit',
+    //   border:'1px solid blue',
+    //   padding:'8px',
+    //   cursor:'pointer',
+    //   ':hover':{
+    //     backgroundColor:'lightgreen',
+    //     color:'black'
+    //   }
 
-    };
+    // };
 
     let persons = null;
+    let btnClass = '';
 
     if (this.state.showPersons) {
       persons = (
@@ -96,7 +97,7 @@ class App extends Component {
                     name={person.name} 
                     age={person.age} 
                     key={person.id}
-                    changed={(event) => this.state.nameChangedhandler(event, person.id)}/>
+                    changed={ ( event ) =>{this.state.nameChangedhandler(event, person.id)}}/>
           } )}
 
           {/* <Person
@@ -120,28 +121,29 @@ class App extends Component {
         </div>
 
       );
-      style.backgroundColor = 'red';
+      // style.backgroundColor = 'red';
       // style[':hover'] = {
       //   backgroundColor:'lightred',
       //   color:'black'
       // }
+      btnClass = classes.Red
 
     }
-    let classes=[];
+    let assignedClasses=[];
     if(this.state.persons.length <= 2){
-      classes.push('red');//classes['red]
+      assignedClasses.push(classes.red);//classes['red]
     }
     if(this.state.persons.length <= 1){
-      classes.push('bold');//classes['red','bold']
+      assignedClasses.push(classes.bold);//classes['red','bold']
     }
 
 
     return (
       
-      <div className="App">
+      <div className={classes.App}>
         <h1>Welcome Ghanashyam</h1>
-        <p className = {classes.join(' ')}>This is working!!!!!!!!!</p>
-        <button style={style} onClick={this.togglePersonHandler}>Switch Name</button>
+        <p className = {assignedClasses.join(' ')}>This is working!!!!!!!!!</p>
+        <button className={btnClass}  onClick={this.togglePersonHandler}>Switch Name</button>
 
         {/* another way toggling */}
         
